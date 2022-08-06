@@ -7,6 +7,7 @@ const sequelize = new Sequelize(
   {
     dialect: 'postgres',
     host: process.env.DB_HOST,
+    timezone: process.env.DB_TIME_ZONE,
   },
 );
 
