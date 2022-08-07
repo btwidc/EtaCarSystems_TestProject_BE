@@ -18,7 +18,7 @@ export default class EmployeeService {
         ['addition_date', 'DESC'],
       ],
     });
-    console.log(JSON.stringify(employees, null, 2));
+
     return employees;
   }
 
@@ -33,7 +33,7 @@ export default class EmployeeService {
         },
       ],
     });
-    console.log(JSON.stringify(employee, null, 2));
+
     return employee;
   }
 

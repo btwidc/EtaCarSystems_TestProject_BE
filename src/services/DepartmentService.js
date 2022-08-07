@@ -41,7 +41,7 @@ export default class DepartmentService {
         ],
       },
     );
-    console.log(JSON.stringify(departments, null, 2));
+
     return departments;
   }
 
@@ -61,7 +61,7 @@ export default class DepartmentService {
         },
       ],
     });
-    console.log(JSON.stringify(department, null, 2));
+
     return department;
   }
 
