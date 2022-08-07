@@ -34,7 +34,7 @@ const Department = sequelize.define(
   { timestamps: false },
 );
 
-Department.hasMany(Employee);
-Employee.belongsTo(Department);
+Department.hasMany(Employee, { foreignKey: 'department_id' });
+Employee.belongsTo(Department, { foreignKey: 'department_id' });
 
 export default Department;

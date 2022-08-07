@@ -13,6 +13,7 @@ const port = process.env.PORT || 5000;
 const server = http.createServer(app);
 
 app.use('/api', router);
+
 const start = async () => {
   try {
     await sequelize.authenticate();

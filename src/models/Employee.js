@@ -32,7 +32,7 @@ const Employee = sequelize.define(
       required: true,
       defaultValue: 'EtaCar Systems',
     },
-    isHead: {
+    is_head: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       required: true,
