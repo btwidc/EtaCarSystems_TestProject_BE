@@ -13,7 +13,7 @@ class ApiError extends Error {
   }
 
   static NotFound() {
-    return new ApiError(404, 'Element not found');
+    return new ApiError(404, 'Not found data');
   }
 
   static AlreadyExists() {

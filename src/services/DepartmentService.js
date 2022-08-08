@@ -3,6 +3,8 @@ import sequelize from '../db.js';
 import Department from '../models/Department.js';
 import Employee from '../models/Employee.js';
 
+import ApiError from '../errors/ApiError.js';
+
 export default class DepartmentService {
   static async getDepartments() {
     const departments = await Department.findAll({
@@ -43,12 +45,16 @@ export default class DepartmentService {
       ],
     });
 
+    if (!departments) {
+      throw ApiError.NotFound();
+    }
+
     return departments;
   }
 
   static async getDepartment(id) {
     const department = await Department.findOne({
-      where: id,
+      where: { id },
       attributes: [
         'name',
         'description',
@@ -69,10 +75,22 @@ export default class DepartmentService {
       ],
     });
 
+    if (!department) {
+      throw ApiError.NotFound();
+    }
+
     return department;
   }
 
   static async addDepartment(name, description) {
+    const department = await Department.findOne({
+      where: { name },
+    });
+
+    if (department) {
+      throw ApiError.AlreadyExists();
+    }
+
     const newDepartment = await Department.create({
       name,
       description,
@@ -86,6 +104,10 @@ export default class DepartmentService {
       where: { id },
     });
 
+    if (!deletedDepartment) {
+      throw ApiError.NotFound();
+    }
+
     return deletedDepartment;
   }
 
@@ -93,9 +115,13 @@ export default class DepartmentService {
     const department = await Department.findOne({
       where: { name: departmentName },
     });
+
+    if (!department) {
+      throw ApiError.NotFound();
+    }
+
     const departmentId = department.id;
 
     return departmentId;
   }
 }
-

@@ -3,6 +3,7 @@ import sequelize from '../db.js';
 import Employee from '../models/Employee.js';
 import Department from '../models/Department.js';
 
+import ApiError from '../errors/ApiError.js';
 import DepartmentService from './DepartmentService.js';
 
 export default class EmployeeService {
@@ -25,12 +26,16 @@ export default class EmployeeService {
       order: [['addition_date', 'DESC']],
     });
 
+    if (!employees) {
+      throw ApiError.NotFound();
+    }
+
     return employees;
   }
 
   static async getEmployee(id) {
     const employee = await Employee.findOne({
-      where: id,
+      where: { id },
       attributes: ['name', 'surname', 'position', 'company'],
       include: [
         {
@@ -39,6 +44,10 @@ export default class EmployeeService {
         },
       ],
     });
+
+    if (!employee) {
+      throw ApiError.NotFound();
+    }
 
     return employee;
   }
@@ -57,7 +66,7 @@ export default class EmployeeService {
       });
 
       if (employee) {
-        throw new Error('Head already exists');
+        throw ApiError.AlreadyExists();
       }
     }
 
