@@ -8,15 +8,21 @@ import DepartmentService from './DepartmentService.js';
 export default class EmployeeService {
   static async getEmployees() {
     const employees = await Employee.findAll({
-      attributes: ['name', 'surname', 'position', 'company',
+      attributes: [
+        'name',
+        'surname',
+        'position',
+        'company',
         [
-          sequelize.fn('TO_CHAR', sequelize.col('addition_date'), 'MON-DD-YYYY HH12:MIPM'),
+          sequelize.fn(
+            'TO_CHAR',
+            sequelize.col('addition_date'),
+            'MON-DD-YYYY HH12:MIPM',
+          ),
           'addition_date',
         ],
       ],
-      order: [
-        ['addition_date', 'DESC'],
-      ],
+      order: [['addition_date', 'DESC']],
     });
 
     return employees;
@@ -38,7 +44,9 @@ export default class EmployeeService {
   }
 
   static async addEmployee(name, surname, position, isHead, departmentName) {
-    const departmentId = await DepartmentService.getDepartmentId(departmentName);
+    const departmentId = await DepartmentService.getDepartmentId(
+      departmentName,
+    );
 
     if (isHead === true) {
       const employee = await Employee.findOne({
@@ -72,4 +80,3 @@ export default class EmployeeService {
     return deletedEmployee;
   }
 }
-
