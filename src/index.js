@@ -8,11 +8,14 @@ import synchronizeModels from './models/synchronizeModels.js';
 
 import router from './routers/index.js';
 
+import errorHandlingMiddleware from './middlewares/errorHandlingMiddleware.js';
+
 const app = express();
 const port = process.env.PORT || 5000;
 const server = http.createServer(app);
 
 app.use('/api', router);
+app.use(errorHandlingMiddleware);
 
 const start = async () => {
   try {
