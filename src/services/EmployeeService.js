@@ -10,6 +10,7 @@ export default class EmployeeService {
   static async getEmployees() {
     const employees = await Employee.findAll({
       attributes: [
+        'id',
         'name',
         'surname',
         'position',
@@ -85,6 +86,10 @@ export default class EmployeeService {
     const deletedEmployee = await Employee.destroy({
       where: { id },
     });
+
+    if (!deletedEmployee) {
+      throw ApiError.NotFound();
+    }
 
     return deletedEmployee;
   }
