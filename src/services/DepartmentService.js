@@ -32,6 +32,14 @@ export default class DepartmentService {
             `),
           'department_head',
         ],
+        [
+          sequelize.literal(`             
+                (SELECT employees.id
+                  FROM employees
+                    WHERE is_head=true AND employees.department_id = department.id)           
+            `),
+          'department_head_id',
+        ],
       ],
       include: [
         {
@@ -56,6 +64,7 @@ export default class DepartmentService {
     const department = await Department.findOne({
       where: { id },
       attributes: [
+        'id',
         'name',
         'description',
         [
@@ -70,7 +79,7 @@ export default class DepartmentService {
       include: [
         {
           model: Employee,
-          attributes: ['name', 'surname', 'position'],
+          attributes: ['id', 'name', 'surname', 'position'],
         },
       ],
     });
