@@ -2,6 +2,7 @@ import 'dotenv/config';
 
 import http from 'http';
 import express from 'express';
+import cors from 'cors';
 
 import sequelize from './db.js';
 import synchronizeModels from './models/synchronizeModels.js';
@@ -14,6 +15,11 @@ const app = express();
 const port = process.env.PORT || 5000;
 const server = http.createServer(app);
 
+app.use(
+  cors({
+    origin: '*',
+  }),
+);
 app.use(express.json());
 
 app.use('/api', router);
