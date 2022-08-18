@@ -9,8 +9,8 @@ departmentRouter.get('/', DepartmentController.getDepartments);
 departmentRouter.get('/:id', DepartmentController.getDepartment);
 departmentRouter.post(
   '/',
-  body('name').isString(),
-  body('description').isString(),
+  body('name').isString().isLength({ min: 2 }),
+  body('description').isString().isLength({ min: 10 }),
   DepartmentController.addDepartment,
 );
 departmentRouter.delete('/:id', DepartmentController.deleteDepartment);
